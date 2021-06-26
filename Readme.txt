@@ -16,3 +16,13 @@ de comer, dormir, bañarse y jugar.
 del proyecto, ya que en esta opción nos encontraremos jugando a piedra, 
 papel o tijera contra la máquina.
 	Si no acertamos en ninguna opción, nuestra mascota fallese.
+	Cada vez que nuestra mascota este triste podemos ver cuanta 
+vida nos queda pulsando el quinto boton, esto nos mostrara un corazon,
+y a medida que perdamos vida este se hira desvaneciendo.
+
+Componentes:
+
+	-Arduino uno
+	-5 switch
+	-6 resistencias de 1K
+	-Matriz de led 8x8(esta esta realizada con el deco MC74HC154)
