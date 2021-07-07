@@ -20,6 +20,10 @@ papel o tijera contra la máquina.
 vida nos queda pulsando el quinto boton, esto nos mostrara un corazon,
 y a medida que perdamos vida este se hira desvaneciendo.
 
+Video del funcionamiento:
+
+https://www.youtube.com/watch?v=VZYoxgnsNBc&ab_channel=EzequielFerrauti
+
 Componentes:
 
 	-Arduino uno
