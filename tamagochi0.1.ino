@@ -1,4 +1,4 @@
-/*Programa para probar el cambio de imagen*/
+/*Tamagotchi con codigo optimizado*/
 
 //Definimos salidas de deco
 const int a0 = 10;
@@ -52,168 +52,91 @@ void setup() {
 }
 
 void loop() {
-    empezar();// esperamos hasta que la funcion detecte la persion del boton inicio 
+    empezar();// esperamos hasta que la funcion detecte la presion del boton inicio 
     vida =10; //inicializamos la vida
     cambio=20;
   while(vida > 0){
     while(cambio == 20){
-      //CARA FELIZ     
-      for(int i = 0; i <= 2000 ; i++){//con este loop se controla el tiepo de la cara feliz
-        caras(8,16);
-        }
+      //CARA FELIZ 
+      vueltas(8,16,2000);    
       cambio = 40;
       randomPin = random(1,5);
       vida = vida - 1;
       //CARA TRISTE
       while(cambio==40){
        caras(16,24);
-       int dato = analogRead(A0);  //conexion del menu de estados     
+       int dato = analogRead(A0);  //conexion del menu de estados y contador de vida    
        if(dato > 500 && dato < 520 ){
         cambio = 1;
         delay(50);
-        if(randomPin == 1){
-          vida = vida + 1;
-          }
-         else{
-           vida = vida - 1;
-          }
+        vida = vidaCalculo(cambio);
        }
        if(dato > 330 && dato < 350){
         cambio = 2;
         delay(50);
-        if(randomPin == 2){
-          vida = vida + 1;
-          }
-         else{
-           vida = vida - 1;
-          }
+        vida = vidaCalculo(cambio);
        }
        if(dato > 244 && dato < 264){
         cambio = 3;
         delay(50);
-        if(randomPin == 3){
-          vida = vida + 1;
-          }
-         else{
-           vida = vida - 1;
-          }
+        vida = vidaCalculo(cambio);
        }
        if(dato > 190 && dato < 210){
         cambio = 4;
         delay(50);
-        if(randomPin == 4){
-          vida = vida + 1;
-          }
-         else{
-           vida = vida - 1;
-          }
+        vida = vidaCalculo(cambio);
         }
        //Boton de estado de vida
        if(dato > 136 && dato < 170){
         delay(50);
             if(vida >= 9){
-              for(int i = 0; i <= 500 ; i++){
-                caras(144,152);
-              }
+              vueltas(144,152,500);
             }
             if(vida <9 && vida >=7){
-              for(int i = 0; i <= 500 ; i++){
-                caras(152,160);
-              }
+              vueltas(152,160,500);
             }
             if(vida <7 && vida >=4){
-             for(int i = 0; i <= 500 ; i++){
-                caras(160,168);
-              }
+              vueltas(160,168,500);
             }
             if(vida <4 && vida >=0){
-             for(int i = 0; i <= 500 ; i++){
-                caras(168,176);
-              }
+              vueltas(168,176,500);
             }
         }
        //imagen de comer
        while(cambio==1){
         for(int f =0; f<=30 ; f++){ //tiempo de secuencia, se le suman los loop de cada imagen
-          for(int i = 0; i <= 20 ; i++){//loop que controla la velocidad de apertura de boca
-           caras(48,56);
-           } 
-           for(int t = 0; t <= 20 ; t++){ //loop que controla la velocidad de cierre de boca
-             caras(56,64);     
-           }
+          vueltas(48,56,20);
+          vueltas(56,64,20);
         }
-        if(randomPin == 1){
-          cambio=20;
-          }
-         else{
-           cambio=40;
-          }
-        if(vida < 0){
-          cambio = 0;
-          }                      
+        cambio = comprobar(1);                      
         }
        //imagen de dormir
        while(cambio==2){
         for(int f =0; f<=30 ; f++){//tiempo de secuencia, se le suman los loop de cada imagen
-          for(int i = 0; i <= 20 ; i++){//loop que controla la velocidad imagen
-           caras(24,32);
-           } 
-           for(int t = 0; t <= 20 ; t++){//loop que controla la velocidad imagen
-             caras(32,40);     
-             t++;
-           }
-           for(int e = 0; e <= 20 ; e++){//loop que controla la velocidad imagen
-               caras(40,48);
-             }
+          vueltas(24,32,20);
+          vueltas(32,40,20);
+          vueltas(40,48,20);
         }                      
-        if(randomPin == 2){
-          cambio=20;
-          }
-         else{
-           cambio=40;
-          }
-        if(vida < 0){
-          cambio = 0;
-          }
+        cambio = comprobar(2);
         }
        //imagen de bañar
        while(cambio==3){
         for(int f =0; f<=30 ; f++){//tiempo de secuencia, se le suman los loop de cada imagen
-          for(int i = 0; i <= 20 ; i++){//loop que controla la velocidad imagen
-           caras(64,72);
-           } 
-           for(int t = 0; t <= 20 ; t++){//loop que controla la velocidad imagen
-             caras(72,80);     
-           }
-           for(int e = 0; e <= 20 ; e++){//loop que controla la velocidad imagen
-               caras(80,88);
-             }
+          vueltas(64,72,20);
+          vueltas(72,80,20);
+          vueltas(80,88,20);
         }                      
-        if(randomPin == 3){
-          cambio=20;
-          }
-         else{
-           cambio=40;
-          }
-        if(vida < 0){
-          cambio = 0;
-          }
+        cambio = comprobar(3);
         }
-        //imagen de jugar( piedra, papel, o tijera)
-       while(cambio==4){
+        //imagen del juego( piedra, papel, o tijera)
+       while(cambio == 4){
         int total = 0;
         int fin = 0;
-        while(fin<3){
-          for(int f =0; f<=5 ; f++){
-            for(int i = 0; i <= 20 ; i++){//loop que controla la velocidad imagen
-             caras(96,104);
-             } 
-             for(int t = 0; t <= 20 ; t++){//loop que controla la velocidad imagen
-               caras(104,112);     
-             }
-             for(int e = 0; e <= 20 ; e++){//loop que controla la velocidad imagen
-                 caras(88,96);
-               }
+        while(fin < 3){
+          for(int f = 0; f <= 5 ; f++){
+            vueltas(96,104,20);
+            vueltas(104,112,20);
+            vueltas(88,96,20);
           }
           digitalWrite(a0,LOW);
           digitalWrite(a1,LOW);
@@ -231,23 +154,17 @@ void loop() {
           while(yo == 0){ 
             int selec = analogRead(A0);
             if(selec > 330 && selec < 350){
-             for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-               caras(96,104);           
-               }
+             vueltas(96,104,200);
              yo = 1;
              delay(50);
            }
            if(selec > 244 && selec < 264){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-                 caras(104,112);                
-               }
+            vueltas(104,112,200);
             yo = 2; 
             delay(50);
            }
            if(selec > 190 && selec < 210){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-                   caras(88,96);
-                 }
+            vueltas(88,96,200);
             yo = 3;
             delay(50);
             }
@@ -256,103 +173,51 @@ void loop() {
           int pc = 0;        
           while(pc == 0){ 
             int randomPc = random(1,4);
-            if(randomPc ==1){
-             for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-               caras(96,104);           
-               }
+            if(randomPc == 1){
+             vueltas(96,104,200);
              pc = 1;
              delay(50);
            }
-           if(randomPc ==2){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-                 caras(104,112);                
-               }
+           if(randomPc == 2){
+            vueltas(104,112,200);
             pc = 2; 
             delay(50);
            }
-           if(randomPc ==3){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-                   caras(88,96);
-                 }
+           if(randomPc == 3){
+            vueltas(88,96,200);
             pc = 3;
             delay(50);
             }
           }
           //quien gana
-          if(yo==1 && pc == 3){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(120,128);
-              total= total + 1;
-             }
+          if((yo == 1 && pc == 3)||(yo == 2 && pc == 1)||(yo == 3 && pc == 2)){
+            vueltas(120,128,200);
+             total= total + 1;
             }
-          if(yo==2 && pc == 1){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(120,128);
-              total= total + 1;
-             }
-            }
-          if(yo == 3 && pc == 2){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(120,128);
-              total= total + 1;
-             }
-            }
-          if(pc == 1 && yo == 3){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(112,120);
-              total= total - 1;
-             }
-            }
-           if(pc == 2 && yo == 1){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(112,120);
-              total= total - 1;
-             }
-            }
-           if(pc == 3 && yo == 2){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(112,120);
-              total= total - 1;
-             }
+          if((pc == 1 && yo == 3)||(pc == 2 && yo == 1)||(pc == 3 && yo == 2)){
+            vueltas(112,120,200);
+            total= total - 1;
             }
           if(yo==pc){
-            for(int i = 0; i <= 200 ; i++){//loop que controla la velocidad imagen
-              caras(8,16);
-             }
+            vueltas(8,16,200);
             }
-            fin++;//manejo cantidad de vueltas
+           fin++;//manejo cantidad de vueltas
            }
         //muestra el resultado
         if(total >= 0){
-            for(int i = 0; i <= 300 ; i++){
-              caras(120,128);
-             }
+          vueltas(120,128,300);
             }
         if(total < 0){
-            for(int i = 0; i <= 300 ; i++){
-              caras(112,120);
-             }
+          vueltas(112,120,300);
            }                     
-        if(randomPin == 4){
-          cambio=20;
-          }
-         else{
-           cambio=40;
-          }
-        if(vida < 0){
-          cambio = 0;
-          }
+       cambio = comprobar(4);
         }
        }
       }        
    }
     for(int f =0; f<=5 ; f++){
-        for(int i = 0; i <= 200 ; i++){
-             caras(128,136);
-             } 
-         for(int t = 0; t <= 200 ; t++){
-               caras(136,144);     
-             }
+      vueltas(128,136,200);
+      vueltas(136,144,200);
      }
 }
 
@@ -369,6 +234,7 @@ void empezar(){
     }   
    }
   }
+  
 /*Funcion imagenes*/
 void caras(int inicio_vector, int fin_vector){
   digitalWrite(a0,LOW);
@@ -397,3 +263,41 @@ void caras(int inicio_vector, int fin_vector){
     delay(1);
     }
   }
+  
+/*Funcion para comprobar el estado*/
+int comprobar(int estado){
+  int resultado;
+  if(randomPin == estado){
+    resultado = 20;
+  }
+  else{
+    resultado =40;
+  }
+  if(vida < 0){
+    resultado = 0;
+  }
+  return resultado;
+}
+
+/*Funcion de calculo de vida*/
+int vidaCalculo(int valor){
+  if(randomPin == valor){
+    vida = vida + 1;
+    return vida;
+   }
+   else{
+    vida = vida - 1;
+    return  vida;
+   }
+  }
+
+/*Funcion para la velocidad de las imagenes*/
+void vueltas(int inicio, int ultimo,int vuelta ){
+  for(int i = 0; i <= vuelta ; i++){
+    caras(inicio,ultimo);
+   } 
+  }
+
+
+
+  
